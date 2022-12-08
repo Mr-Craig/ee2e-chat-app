@@ -1,1 +1,1 @@
-# FYP
+# Encrypted Chat Application
