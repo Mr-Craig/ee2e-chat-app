@@ -2,9 +2,11 @@
   "name": "chat-backend",
   "version-string": "0.1.0",
   "dependencies": [
-    "uwebsockets",
+    { "name": "usockets", "version>=": "0.8.1"},
+    { "name": "uwebsockets", "version>=": "20.14.0"},
     "nlohmann-json",
     "fmt",
     "sqlitecpp"
-  ]
+  ],
+  "builtin-baseline": "82c7a4578abd317e019f02e05353ab7eabab8e15"
 }

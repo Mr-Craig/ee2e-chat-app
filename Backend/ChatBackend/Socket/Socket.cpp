@@ -42,7 +42,7 @@ void websocket::init()
     });
 
     app.get("/*", [](uWS::HttpResponse<true>* res, uWS::HttpRequest* req) {
-        res->writeStatus("200 OK");
+        res->writeStatus("404 Not Found");
         res->end(":)");
     });
     
@@ -58,10 +58,6 @@ void websocket::init()
         else {
             FATAL("Socket", "Unable to listen on port {}", port);
         }
-    });
-
-    wsThread = std::thread([this]() {
-        app.run();
     });
 }
 

@@ -17,8 +17,6 @@ public:
 	static std::shared_ptr<websocket> get();
 
 	void registerEvent(std::string_view event, std::function<void(uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, nlohmann::json message)> func);
-
-	bool isRunning() const { return wsThread.joinable(); };
 private:
 	static std::shared_ptr<websocket> socket_ptr;
 
@@ -29,9 +27,9 @@ private:
 	void onClose(uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, int code, std::string_view message);
 
 	uWS::SSLApp app = uWS::SSLApp({
-		.key_file_name = "G:\\Work\\FYP\\ChatBackend\\cert\\public.pem",
-		.cert_file_name = "G:\\Work\\FYP\\ChatBackend\\cert\\private.pem",
-		.passphrase = "123456789"
+		.key_file_name = "key.pem",
+		.cert_file_name = "cert.pem",
+		.passphrase = "1234"
 		});
 
 	std::unordered_map<std::string /*id*/, uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* /*socket*/> connectedClients;

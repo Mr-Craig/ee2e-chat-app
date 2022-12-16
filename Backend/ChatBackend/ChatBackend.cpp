@@ -19,9 +19,8 @@ int main()
 		ws->send("relayed");
 	});
 
-	while (ws->isRunning()) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	}
+	ws->getApp().run();
 
+	FATAL("General", "Application closed unexpectedly");
 	return 0;
 }
