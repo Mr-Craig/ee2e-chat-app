@@ -9,9 +9,17 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
 	std::shared_ptr<websocket> ws = websocket::get();
+
+	// get server ip from argument
+	std::string serverIp = "N/A";
+	if(argc > 1) {
+		serverIp = std::string(argv[1]);
+	}
+
+	VERBOSE("Socket", "Server IP: {}", serverIp);
 	
 	db::get()->get();
 	ws->registerEvent("relay", [](uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, nlohmann::json message) {
