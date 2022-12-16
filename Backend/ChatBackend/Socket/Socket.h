@@ -29,7 +29,7 @@ private:
 	uWS::SSLApp app = uWS::SSLApp({
 		.key_file_name = "key.pem",
 		.cert_file_name = "cert.pem",
-		.passphrase = "1234"
+		.passphrase = "123456789"
 		});
 
 	std::unordered_map<std::string /*id*/, uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* /*socket*/> connectedClients;
