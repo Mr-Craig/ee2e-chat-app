@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Add source to this project's executable.
-add_executable (LookupServer "LookupServer.cpp" "LookupServer.h")
+add_executable (LookupServer "LookupServer.cpp" "LookupServer.h" "ServerList/ServerList.h" "ServerList/ServerList.cpp")
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Certs/cert.pem
 	DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
