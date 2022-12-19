@@ -13,7 +13,7 @@ public:
 
     void updateServer(const std::string& serverIp, std::string_view geoLocation);
 
-    const std::string& const getOutput() { return outputString; };
+    const std::string& getOutput() { return outputString; };
 private:
     static std::shared_ptr<serverList> classPtr;
 

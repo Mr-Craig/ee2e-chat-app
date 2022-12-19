@@ -28,7 +28,6 @@ int main(int argc, char** argv)
 	});
 
 	ws->getApp().run();
-
-	FATAL("General", "Application closed unexpectedly");
+	
 	return 0;
 }

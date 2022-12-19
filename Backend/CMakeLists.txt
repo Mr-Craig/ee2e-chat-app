@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 cmake_policy(SET CMP0079 NEW)
 
+find_package(OpenSSL REQUIRED)
 find_package(ZLIB REQUIRED)
 find_library(USOCKETS_LIB uSockets)
 #find_package(unofficial-libuv CONFIG REQUIRED)
@@ -27,6 +28,8 @@ add_subdirectory ("LookupServer")
 
 target_include_directories(ChatBackend PRIVATE ${UWEBSOCKETS_INCLUDE_DIRS})
 target_link_libraries(ChatBackend PRIVATE
+	OpenSSL::SSL
+	OpenSSL::Crypto
 	ZLIB::ZLIB
 	${USOCKETS_LIB}
 	$<IF:$<TARGET_EXISTS:uv_a>,uv_a,uv>
@@ -37,6 +40,8 @@ target_link_libraries(ChatBackend PRIVATE
 
 target_include_directories(LookupServer PRIVATE ${UWEBSOCKETS_INCLUDE_DIRS})
 target_link_libraries(LookupServer PRIVATE
+	OpenSSL::SSL
+	OpenSSL::Crypto
 	ZLIB::ZLIB
 	${USOCKETS_LIB}
 	$<IF:$<TARGET_EXISTS:uv_a>,uv_a,uv>
