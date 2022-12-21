@@ -8,14 +8,14 @@
 #include <fmt/core.h>
 
 #ifdef _DEBUG
-	#define VERBOSE(category, frmt, ...) debug::get()->print(debug::VERBOSE, category, fmt::format(frmt, __VA_ARGS__));
+	#define VERBOSE(category, frmt, ...) debug::get()->print(debug::VERBOSE, category, fmt::format(frmt, ##__VA_ARGS__));
 #else
 	#define VERBOSE(category, frmt, ...) 0;
 #endif
-#define LOG(category, frmt, ...) debug::get()->print(debug::LOG, category, fmt::format(frmt, __VA_ARGS__));
-#define WARNING(category, frmt, ...) debug::get()->print(debug::WARNING, category, fmt::format(frmt, __VA_ARGS__));
-#define ERR(category, frmt, ...) debug::get()->print(debug::ERR, category, fmt::format(frmt, __VA_ARGS__));
-#define FATAL(category, frmt, ...) debug::get()->print(debug::FATAL, category, fmt::format("\n      --------- Fatal Error Occured ---------      \n File: {}\n Line: {} \n Reason: {}", __FILE__, __LINE__, fmt::format(frmt, __VA_ARGS__)));
+#define LOG(category, frmt, ...) debug::get()->print(debug::LOG, category, fmt::format(frmt, ##__VA_ARGS__));
+#define WARNING(category, frmt, ...) debug::get()->print(debug::WARNING, category, fmt::format(frmt, ##__VA_ARGS__));
+#define ERR(category, frmt, ...) debug::get()->print(debug::ERR, category, fmt::format(frmt, ##__VA_ARGS__));
+#define FATAL(category, frmt, ...) debug::get()->print(debug::FATAL, category, fmt::format("\n      --------- Fatal Error Occured ---------      \n File: {}\n Line: {} \n Reason: {}", __FILE__, __LINE__, fmt::format(frmt, ##__VA_ARGS__)));
 
 class debug
 {

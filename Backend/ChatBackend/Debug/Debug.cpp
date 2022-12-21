@@ -5,10 +5,7 @@ std::shared_ptr<debug> debug::debug_ptr = nullptr;
 debug::debug()
 {
 	logfile.open("log.txt");
-
-#ifdef __WINDOWS
-	std::ios::sync_with_stdio(false);
-#endif
+	std::ios::sync_with_stdio(true);
 }
 
 debug::~debug()
@@ -65,8 +62,8 @@ void debug::print(severity e, std::string category, std::string message)
 		break;
 	}
 
-	std::cout << "\u001b[0m] " << category << ": " << message << "\n";
-	ss << "] " << category << ": " << message << "\n";
+	std::cout << "\u001b[0m] " << category << " - " << message << "\n";
+	ss << "] " << category << " - " << message << "\n";
 
 	if (logfile.is_open()) {
 		logfile << ss.str();
