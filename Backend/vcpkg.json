@@ -2,12 +2,10 @@
   "name": "chat-backend",
   "version-string": "0.1.0",
   "dependencies": [
-    "openssl",
-    { "name": "usockets", "features": ["ssl"], "version>=": "0.8.1"},
-    { "name": "uwebsockets", "version>=": "20.14.0"},
+    { "name": "usockets", "features": ["ssl"]},
+    { "name": "uwebsockets"},
     "nlohmann-json",
     "fmt",
     "sqlitecpp"
-  ],
-  "builtin-baseline": "82c7a4578abd317e019f02e05353ab7eabab8e15"
+  ]
 }
