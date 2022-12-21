@@ -43,13 +43,27 @@ void websocket::init()
 
     app.get("/*", [](uWS::HttpResponse<true>* res, uWS::HttpRequest* req) {
         res->writeStatus("404 Not Found");
-        res->end(":)");
+        res->end("Not Found");
+    });
+
+    app.get("/ping", [](uWS::HttpResponse<true>* res, uWS::HttpRequest* req) {
+        res->writeStatus("200 OK");
+        res->end("pong");
     });
     
-    int port = 8443;
+    unsigned int port = 8443;
 
+#ifndef _WIN32
     if (const char* port_env = std::getenv("CHATAPP_PORT"))
-        port = std::atoi(port_env);
+        port = std::stoul(port_env);
+#else
+    // use windows "safe" function
+    char* buffer = nullptr;
+    size_t bufferSz = 0;
+    if(_dupenv_s(&buffer, &bufferSz, "CHATAPP_PORT") == 0 && buffer != nullptr)
+        port = std::stoul(buffer);
+    free(buffer);
+#endif
 
     app.listen(port, [port](auto* socket) {
         if (socket) {
@@ -88,7 +102,7 @@ void websocket::onMessage(uWS::WebSocket<(bool)true, (bool)true, websocket::user
         }
     }
     catch(json::parse_error& e) {
-        ERR("Socket", "Unable to parse message, Message: {}", message);
+        ERR("Socket", "Unable to parse message, Error: {}", e.what());
     }
 }
 
