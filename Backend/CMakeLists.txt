@@ -22,30 +22,32 @@ find_package(nlohmann_json CONFIG REQUIRED)
 
 find_package(SQLiteCpp CONFIG REQUIRED)
 
+add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
+
 # Include sub-projects.
 add_subdirectory ("ChatBackend")
 add_subdirectory ("LookupServer")
 
 target_include_directories(ChatBackend PRIVATE ${UWEBSOCKETS_INCLUDE_DIRS})
 target_link_libraries(ChatBackend PRIVATE
-	OpenSSL::SSL
-	OpenSSL::Crypto
 	ZLIB::ZLIB
 	${USOCKETS_LIB}
 	$<IF:$<TARGET_EXISTS:uv_a>,uv_a,uv>
 	nlohmann_json::nlohmann_json
 	fmt::fmt
 	SQLiteCpp
+	OpenSSL::SSL
+	OpenSSL::Crypto
 )
 
 target_include_directories(LookupServer PRIVATE ${UWEBSOCKETS_INCLUDE_DIRS})
 target_link_libraries(LookupServer PRIVATE
-	OpenSSL::SSL
-	OpenSSL::Crypto
 	ZLIB::ZLIB
 	${USOCKETS_LIB}
 	$<IF:$<TARGET_EXISTS:uv_a>,uv_a,uv>
 	nlohmann_json::nlohmann_json
 	fmt::fmt
 	SQLiteCpp
+	OpenSSL::SSL
+	OpenSSL::Crypto
 )

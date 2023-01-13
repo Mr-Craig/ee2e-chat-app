@@ -7,7 +7,7 @@
 #include <fstream>
 #include <fmt/core.h>
 
-#ifdef _DEBUG
+#ifdef DEBUG
 	#define VERBOSE(category, frmt, ...) debug::get()->print(debug::VERBOSE, category, fmt::format(frmt, ##__VA_ARGS__));
 #else
 	#define VERBOSE(category, frmt, ...) 0;
