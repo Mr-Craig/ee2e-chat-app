@@ -1,4 +1,4 @@
-import { IonApp, IonHeader, IonRouterOutlet, IonSplitPane, setupIonicReact } from '@ionic/react';
+import { IonApp, IonHeader, IonRouterOutlet, IonSplitPane, IonText, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 
@@ -19,7 +19,10 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
-import './theme/variables.css ';
+import './theme/variables.css';
+
+// Pages
+import ServerList from './pages/serverList';
 
 setupIonicReact();
 
@@ -29,9 +32,7 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <IonHeader>Hi</IonHeader>
-            </Route>
+            <Route path="/serverlist" component={ServerList}/>
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
