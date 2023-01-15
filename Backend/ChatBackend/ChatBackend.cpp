@@ -13,13 +13,19 @@ int main(int argc, char** argv)
 {
 	std::shared_ptr<websocket> ws = websocket::get();
 
-	// get server ip from argument
-	std::string serverIp = "N/A";
-	if(argc > 1) {
-		serverIp = std::string(argv[1]);
-	}
+	if(argc >= 3) {
+		if(std::string(argv[1]) == "--ip") {
+			std::string serverName = std::string(argv[2]);
+			// Start Ping
+			int port = ws->getPort();
 
-	VERBOSE("Socket", "Server IP: {}", serverIp);
+			utils::pingLookupServer(serverName, port);
+		}
+	}
+	// get server ip from argument
+	/*if(argc > 1) {
+		serverIp = std::string(argv[1]);
+	} */
 	
 	db::get()->get();
 	ws->registerEvent("relay", [](uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, nlohmann::json message) {

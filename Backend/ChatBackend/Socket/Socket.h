@@ -4,6 +4,8 @@
 #include <uwebsockets/App.h>	
 #include <nlohmann/json.hpp>
 
+#define DEFAULT_PORT 8443
+
 class websocket
 {
 public:
@@ -17,10 +19,14 @@ public:
 	static std::shared_ptr<websocket> get();
 
 	void registerEvent(std::string_view event, std::function<void(uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, nlohmann::json message)> func);
+
+	int getPort() const { return portNumber; };
 private:
 	static std::shared_ptr<websocket> socket_ptr;
 
 	std::thread wsThread;
+
+	int portNumber = DEFAULT_PORT;
 
 	void onOpen(uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws);
 	void onMessage(uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, std::string_view message, uWS::OpCode opCode);

@@ -51,7 +51,7 @@ void websocket::init()
         res->end("pong");
     });
     
-    unsigned int port = 8443;
+    unsigned int port = 0;
 
 #ifndef _WIN32
     if (const char* port_env = std::getenv("CHATAPP_PORT"))
@@ -65,7 +65,11 @@ void websocket::init()
     free(buffer);
 #endif
 
-    app.listen(port, [port](auto* socket) {
+    if(port != 0) {
+        portNumber = port;
+    }
+
+    app.listen(portNumber, [port](auto* socket) {
         if (socket) {
             LOG("Socket", "Listening on Port {}", port);
         }
