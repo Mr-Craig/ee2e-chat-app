@@ -15,6 +15,7 @@ find_library(USOCKETS_LIB uSockets)
 #find_package(unofficial-libuv CONFIG REQUIRED)
 find_package(libuv CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
+find_package(CURL CONFIG REQUIRED)
 
 
 find_path(UWEBSOCKETS_INCLUDE_DIRS "uwebsockets/App.h")
@@ -30,6 +31,7 @@ add_subdirectory ("LookupServer")
 
 target_include_directories(ChatBackend PRIVATE ${UWEBSOCKETS_INCLUDE_DIRS})
 target_link_libraries(ChatBackend PRIVATE
+	CURL::libcurl
 	ZLIB::ZLIB
 	${USOCKETS_LIB}
 	$<IF:$<TARGET_EXISTS:uv_a>,uv_a,uv>

@@ -6,6 +6,7 @@
     { "name": "uwebsockets"},
     "nlohmann-json",
     "fmt",
-    "sqlitecpp"
+    "sqlitecpp",
+    { "name": "curl", "features": ["ssl"]}
   ]
 }
