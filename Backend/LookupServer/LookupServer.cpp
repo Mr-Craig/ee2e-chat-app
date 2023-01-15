@@ -12,10 +12,15 @@ int main() {
 		.cert_file_name = "cert.pem",
 		.passphrase = "123456789"
 	}).get("/*", [](uWS::HttpResponse<true>* res, uWS::HttpRequest* req) {
+        res->writeHeader("Access-Control-Allow-Origin", "*");
+        res->writeHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res->writeHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
+        res->writeHeader("Access-Control-Max-Age", "3600");
         res->writeStatus("200 OK");
         res->end(serverList::get()->getOutput());
     }).post("/ping", [](uWS::HttpResponse<true>* res, uWS::HttpRequest* req) {
 
+        
         res->onData([res, req, bodyBuffer = (std::string*)nullptr](std::string_view chunk, bool isLast) mutable {
             if(!bodyBuffer) {
                 bodyBuffer = new std::string;
@@ -40,12 +45,10 @@ int main() {
             res->end("Bad Request");
         });
 
-    }).listen(9876, [](auto socket) {
-
+    }).listen(443, [](auto socket) {
         if(socket) {
-            std::cout << "Listening on port 9876" << std::endl;
+            std::cout << "Listening on port 443" << std::endl;
         }
-
     }).run();
 
     return 0;
