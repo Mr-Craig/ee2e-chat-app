@@ -23,6 +23,7 @@ import './theme/variables.css';
 
 // Pages
 import ServerList from './pages/serverList';
+import splashPage from './pages/splash/splash';
 
 setupIonicReact();
 
@@ -32,7 +33,8 @@ const App: React.FC = () => {
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <IonRouterOutlet id="main">
-            <Route path="/serverlist" component={ServerList}/>
+            <Route path="/servers" exact={true} component={ServerList}/>
+            <Route path="/" exact={true} component={splashPage}/>
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
