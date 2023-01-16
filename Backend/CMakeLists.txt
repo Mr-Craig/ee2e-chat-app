@@ -16,6 +16,8 @@ find_library(USOCKETS_LIB uSockets)
 find_package(libuv CONFIG REQUIRED)
 find_package(fmt CONFIG REQUIRED)
 find_package(CURL CONFIG REQUIRED)
+find_package(unofficial-libargon2 CONFIG REQUIRED)
+find_package(Threads REQUIRED)
 
 
 find_path(UWEBSOCKETS_INCLUDE_DIRS "uwebsockets/App.h")
@@ -27,11 +29,17 @@ add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
 
 # Include sub-projects.
 add_subdirectory ("ChatBackend")
+
+enable_testing()
+
+add_subdirectory ("Tests")
 add_subdirectory ("LookupServer")
 
 target_include_directories(ChatBackend PRIVATE ${UWEBSOCKETS_INCLUDE_DIRS})
 target_link_libraries(ChatBackend PRIVATE
 	CURL::libcurl
+	Threads::Threads
+	unofficial::argon2::libargon2
 	ZLIB::ZLIB
 	${USOCKETS_LIB}
 	$<IF:$<TARGET_EXISTS:uv_a>,uv_a,uv>

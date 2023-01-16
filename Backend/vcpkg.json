@@ -7,6 +7,8 @@
     "nlohmann-json",
     "fmt",
     "sqlitecpp",
-    { "name": "curl", "features": ["ssl"]}
+    { "name": "curl", "features": ["ssl"]},
+    "argon2",
+    "gtest"
   ]
 }
