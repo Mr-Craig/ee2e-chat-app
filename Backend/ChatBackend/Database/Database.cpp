@@ -21,7 +21,7 @@ db::db()
 	if(!integrityCheck())
 		FATAL("DB", "SQLite Integrity check failed! Delete Database and relaunch");
 
-	optimizeDatabase();
+	optimizeThread = std::thread(&db::optimizeDatabase, this);
 }
 
 bool db::createTables()
@@ -99,8 +99,17 @@ void db::optimizeDatabase()
 	/*
 		Recommended by documentation to run this command every few hours to help with long-term query performance (https://www.sqlite.org/pragma.html#pragma_optimize)
 	*/
-	static_cast<void>(std::async(std::launch::async, [this]{
-		std::this_thread::sleep_for(std::chrono::hours(2));
-		optimizeDatabase();
-	}));
+	std::this_thread::sleep_for(std::chrono::hours(2));
+	optimizeDatabase();
+}
+
+
+bool db::checkUsername(std::string & username)
+{
+	return false;
+}
+
+bool db::login(std::string & username, std::string & password)
+{
+	return false;
 }

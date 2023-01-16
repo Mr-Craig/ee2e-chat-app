@@ -12,6 +12,9 @@ public:
 	static std::shared_ptr<db> get();
 
 	static bool registerUser(std::string& username, std::string& password);
+
+	bool checkUsername(std::string& username);
+	bool login(std::string& username, std::string& password);
 private:
 	static std::shared_ptr<db> dbPtr;
 
@@ -20,4 +23,6 @@ private:
 	bool createTables();
 	bool integrityCheck();
 	void optimizeDatabase();
+
+	std::thread optimizeThread;
 };
