@@ -12,8 +12,7 @@ export interface serverEntry
 interface serverEntryFC
 {
     serverEntry : serverEntry,
-    onClick : (arg0 : serverEntry) => void,
-    key : any
+    onClick : (arg0 : serverEntry) => void
 }
 
 const ServerEntry : React.FC<serverEntryFC> = (props) => {
@@ -27,12 +26,11 @@ const ServerEntry : React.FC<serverEntryFC> = (props) => {
                     const t1 = performance.now();
                     setPing(`${(t1 - t0).toFixed(0)}`);
                 }).catch((err) => {
-                    console.log(err);
                     setPing("ERR");
                 });
     }, []);
     return (
-        <IonItem button key={props.key} onClick={(event) => {
+        <IonItem button onClick={(event) => {
             props.onClick(props.serverEntry);
         }}>
             <IonLabel>
