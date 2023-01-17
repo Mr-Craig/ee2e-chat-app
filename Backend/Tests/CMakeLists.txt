@@ -14,6 +14,8 @@ target_link_libraries(hash PRIVATE
 	Threads::Threads
 	unofficial::argon2::libargon2
     fmt::fmt
+    OpenSSL::SSL
+	OpenSSL::Crypto
 )
 
 target_link_libraries(verifyHash PRIVATE
@@ -21,6 +23,8 @@ target_link_libraries(verifyHash PRIVATE
     Threads::Threads
     unofficial::argon2::libargon2
     fmt::fmt
+    OpenSSL::SSL
+	OpenSSL::Crypto
 )
 
 target_link_libraries(verifyHashFail PRIVATE
@@ -28,6 +32,8 @@ target_link_libraries(verifyHashFail PRIVATE
     Threads::Threads
     unofficial::argon2::libargon2
     fmt::fmt
+    OpenSSL::SSL
+	OpenSSL::Crypto
 )
 
 

@@ -2,6 +2,7 @@
 #include <chrono>
 #include <thread>
 #include <argon2.h>
+#include <openssl/rand.h>
 
 #include "../Debug/Debug.h"
 #include "Utils.h"
@@ -51,31 +52,38 @@ std::string utils::hashPassword(std::string password)
 {
 	uint32_t t_cost = 2;            // 2-pass computation
     uint32_t m_cost = (1<<16);      // 64 mebibytes memory usage
-    uint32_t parallelism = 4;       // number of threads and lanes
+    uint32_t parallelism = 2;       // number of threads and lanes
 
 	std::string hashedPassword;
-	hashedPassword.resize(HASHLEN);
+	hashedPassword.resize(HASHLEN*4);
 
 	uint8_t salt[SALTLEN];
-    memset( salt, 0x00, SALTLEN );
+	RAND_bytes(salt, SALTLEN);
+    ///memset( salt, 0x00, SALTLEN );
 
-	int ret = argon2i_hash_raw(t_cost, m_cost, parallelism, password.data(), password.size(), salt, SALTLEN, hashedPassword.data(), hashedPassword.size());
+	size_t encodedSize = hashedPassword.size();
+	int ret = argon2id_hash_encoded(t_cost, m_cost, parallelism, password.data(), password.size(), salt, SALTLEN, HASHLEN, hashedPassword.data(), encodedSize);
+	
 	if(ret != ARGON2_OK) {
-		ERR("Hashing", "Failed to hash password! Error: {}", ret);
+		ERR("Hashing", "Failed to hash password! Error: {}", argon2_error_message(ret));
 		hashedPassword = "";
 	};
+
+	hashedPassword.erase(std::find(hashedPassword.begin(), hashedPassword.end(), '\0'), hashedPassword.end());
 
 	return hashedPassword;
 }
 
 bool utils::verifyPasswordHash(std::string password, std::string passwordHash)
 {
-	std::string testPassword = utils::hashPassword(password);
+	/*std::string testPassword = utils::hashPassword(password);
 
 	if(testPassword.size() != passwordHash.size()) {
 		WARNING("Hashing", "Provided passwords do not have the same size!");
 		return false;
-	}
+	} */
 
-	return memcmp(testPassword.data(), passwordHash.data(), HASHLEN) == 0;
+	int ret = argon2id_verify(passwordHash.c_str(), password.data(), password.length());
+
+	return ret == ARGON2_OK;
 }

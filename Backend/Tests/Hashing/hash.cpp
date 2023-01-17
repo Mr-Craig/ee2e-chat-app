@@ -2,5 +2,5 @@
 
 int main() {
     std::string hashedPassword = utils::hashPassword("password");
-    return !(hashedPassword.size() == HASHLEN);
+    return !(hashedPassword.length() > 0);
 }
