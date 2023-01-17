@@ -5,7 +5,7 @@ import { chatbubbles } from "ionicons/icons";
 import "./splash.css";
 import { Link } from "react-router-dom";
 
-const splashPage : React.FC = () => {
+const SplashPage : React.FC = () => {
     return (
         <IonApp>
             <IonContent class="ion-padding">
@@ -33,14 +33,14 @@ const splashPage : React.FC = () => {
                     "bottom": "0",
                     "position": "absolute",
                     "width": "calc(100% - var(--ion-padding, 16px))",
-                    "margin-left": "calc(0px - calc(var(--ion-padding, 16px) / 2))",
-                    "padding-bottom": "10%"
+                    marginLeft: "calc(0px - calc(var(--ion-padding, 16px) / 2))",
+                    paddingBottom: "10%"
                 }}>
                     <IonRow>
                         <IonItem style={{
                             "width": "calc(100% - var(--ion-padding, 16px))",
-                            "margin-left": "0px",
-                            "padding-bottom": "5%"
+                            marginLeft: "0px",
+                            paddingBottom: "5%"
                         }}>
                             <IonLabel position="stacked">Server Name</IonLabel>
                             <IonInput></IonInput>
@@ -54,8 +54,7 @@ const splashPage : React.FC = () => {
 
                         <Link to="/servers" style={{ textDecoration: 'none', width: "100%", textAlign: "center", paddingTop: "15px" }}>
                             <IonText style={{
-                                "font-size": "18px",
-
+                                fontSize: "18px",
                             }}> Server List </IonText>
                         </Link>
                     </IonRow>
@@ -66,4 +65,4 @@ const splashPage : React.FC = () => {
     );
 }
 
-export default splashPage;
+export default SplashPage;
