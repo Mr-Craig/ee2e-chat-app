@@ -106,7 +106,22 @@ void db::optimizeDatabase()
 
 bool db::checkUsername(std::string & username)
 {
-	return false;
+	try {
+		SQLite::Statement query(sqlDb, "SELECT COUNT(*) AS amount FROM users WHERE username = ?");
+		query.bind(1, username);
+
+		while(query.executeStep()) {
+			int amount = query.getColumn(0);
+
+			if(amount == 0)
+				return true; 
+		};
+
+		return false;
+	} catch(std::exception& e) {
+		WARNING("DB", "Failed to check for username, Error: {}", e.what());
+		return false;
+	}
 }
 
 bool db::registerUser(Types::UserInfo &User)

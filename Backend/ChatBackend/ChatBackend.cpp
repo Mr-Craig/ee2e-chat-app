@@ -46,7 +46,15 @@ int main(int argc, char** argv)
 	});
 
 	ws->registerEvent("username_check", [](uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, nlohmann::json message) {
-		
+		if(message.is_string()) {
+			std::string usernameToCheck = message.get<std::string>();
+			
+			bool usernameAvailable = db::get()->checkUsername(usernameToCheck);
+			nlohmann::json ret;
+			ret["body"] = {{"username", usernameToCheck}, {"available", usernameAvailable}};
+			ret["event"] = "username_check";
+			ws->send(ret.dump(), uWS::OpCode::TEXT);
+		}
 	});
 
 	ws->getApp().run();
