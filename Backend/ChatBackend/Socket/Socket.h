@@ -10,10 +10,8 @@ class websocket
 {
 public:
 	struct userData {
-		std::string id;
-		std::string username;
-		std::string session_id;
-		bool authed;
+		std::string id = "";
+		bool authed = false;
 	};
 
 	static std::shared_ptr<websocket> get();

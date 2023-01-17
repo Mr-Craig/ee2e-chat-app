@@ -109,7 +109,12 @@ bool db::checkUsername(std::string & username)
 	return false;
 }
 
-bool db::login(std::string & username, std::string & password)
+bool db::registerUser(Types::UserInfo &User)
+{
+    return false;
+}
+
+bool db::login(Types::UserInfo& User)
 {
 	return false;
 }

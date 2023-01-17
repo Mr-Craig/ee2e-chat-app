@@ -4,13 +4,24 @@
 
 using nlohmann::json;
 
-struct UserInfo
+namespace Types
 {
-    UserInfo(json& j) {
-        
-    }
+    struct UserInfo
+    {
+        UserInfo(json& j) {
+            if(j.contains("username") && j["username"].is_string()) {
+                username = j["username"].get<std::string>();
+            }
+
+            if(j.contains("password") && j["password"].is_string()) {
+                password = j["password"].get<std::string>();
+            }
+        }
     
-    std::string username;
-    std::string password;
-    std::string publicKey;
+        bool isValid() { return username.length() > 0 && password.length() > 0; };
+        
+        std::string username;
+        std::string password;
+        std::string publicKey;
+    };
 }

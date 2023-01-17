@@ -1,6 +1,5 @@
 {
     "files.associations": {
-        "unordered_map": "cpp",
         "algorithm": "cpp",
         "any": "cpp",
         "array": "cpp",
@@ -14,6 +13,7 @@
         "cmath": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
+        "condition_variable": "cpp",
         "cstdarg": "cpp",
         "cstddef": "cpp",
         "cstdint": "cpp",
@@ -28,6 +28,7 @@
         "forward_list": "cpp",
         "fstream": "cpp",
         "functional": "cpp",
+        "future": "cpp",
         "initializer_list": "cpp",
         "iomanip": "cpp",
         "ios": "cpp",
@@ -59,6 +60,7 @@
         "tuple": "cpp",
         "type_traits": "cpp",
         "typeinfo": "cpp",
+        "unordered_map": "cpp",
         "unordered_set": "cpp",
         "utility": "cpp",
         "valarray": "cpp",

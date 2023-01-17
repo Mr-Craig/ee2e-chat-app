@@ -1,6 +1,7 @@
 #include "../Debug/Debug.h"
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <future>
+#include "Types.h"
 
 #define SQL_FILENAME "info.db3"
 
@@ -11,10 +12,10 @@ public:
 
 	static std::shared_ptr<db> get();
 
-	static bool registerUser(std::string& username, std::string& password);
+	bool registerUser(Types::UserInfo& User);
 
 	bool checkUsername(std::string& username);
-	bool login(std::string& username, std::string& password);
+	bool login(Types::UserInfo& User);
 private:
 	static std::shared_ptr<db> dbPtr;
 
