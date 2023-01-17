@@ -47,6 +47,10 @@ void websocket::init()
     });
 
     app.get("/ping", [](uWS::HttpResponse<true>* res, uWS::HttpRequest* req) {
+        res->writeHeader("Access-Control-Allow-Origin", "*");
+        res->writeHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res->writeHeader("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with");
+        res->writeHeader("Access-Control-Max-Age", "3600");
         res->writeStatus("200 OK");
         res->end("pong");
     });
