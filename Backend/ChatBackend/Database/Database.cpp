@@ -1,3 +1,4 @@
+#include "../Utils/Utils.h"
 #include "Database.h"
 
 std::shared_ptr<db> db::dbPtr = nullptr;
@@ -126,10 +127,34 @@ bool db::checkUsername(std::string & username)
 
 bool db::registerUser(Types::UserInfo &User)
 {
-    return false;
+	try {
+		SQLite::Statement query(sqlDb, "INSERT INTO users(username, password) VALUES(?, ?)");
+
+		query.bind(1, User.username);
+		query.bind(2, User.password);
+
+		// false = done
+		return !query.executeStep();
+	} catch(std::exception& e) {
+		WARNING("DB", "Failed to register user into database, Error: {}", e.what());
+		return false;
+	}
 }
 
 bool db::login(Types::UserInfo& User)
 {
-	return false;
+	try {
+		SQLite::Statement query(sqlDb, "SELECT password FROM users WHERE username = ?");
+
+		query.bind(1, User.username);
+
+		while(query.executeStep()) {
+			std::string hashedPass = query.getColumn(0);
+
+			return utils::verifyPasswordHash(User.password, hashedPass);
+		};
+	} catch(std::exception& e) {
+		WARNING("DB", "Failed to login user into database, Error: {}", e.what());
+		return false;
+	}
 }

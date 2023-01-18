@@ -18,8 +18,8 @@ namespace Types
             }
         }
     
-        bool isValid() { return username.length() > 0 && password.length() > 0; };
-        
+        bool isValid() { return username.length() >= 4 && password.length() >= 6; };
+
         std::string username;
         std::string password;
         std::string publicKey;

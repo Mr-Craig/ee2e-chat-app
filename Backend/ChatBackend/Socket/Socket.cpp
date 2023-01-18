@@ -19,6 +19,33 @@ void websocket::registerEvent(std::string_view event, std::function<void(uWS::We
     vectorRef.push_back(func);
 }
 
+bool websocket::isUserOnline(std::string username)
+{
+    return authedUsers.find(username) != authedUsers.end();
+}
+
+void websocket::addUser(std::string username, uWS::WebSocket<(bool)true, (bool)true, websocket::userData> *ws)
+{
+    authedUsers[username] = ws;
+}
+
+void websocket::removeUser(std::string username)
+{
+    authedUsers.erase(username);
+}
+
+bool websocket::relayMessage(std::string username, nlohmann::json message)
+{
+    if(!isUserOnline(username)) {
+        // TODO: save message
+        VERBOSE("Relay", "{} is offline, saving message for later.", username);
+        return false;
+    }
+
+    authedUsers[username]->send(message.dump(), uWS::OpCode::TEXT);
+    return true;
+}
+
 void websocket::init()
 {
 	if (app.constructorFailed())
@@ -89,7 +116,7 @@ void websocket::onOpen(uWS::WebSocket<(bool)true, (bool)true, websocket::userDat
 
     ws->getUserData()->id = socketId;
 
-    connectedClients.insert(std::make_pair(socketId, ws));
+    //connectedClients.insert(std::make_pair(socketId, ws));
 
     LOG("Socket", "New Connection, Id: {}", socketId);
 }
@@ -116,5 +143,8 @@ void websocket::onMessage(uWS::WebSocket<(bool)true, (bool)true, websocket::user
 
 void websocket::onClose(uWS::WebSocket<(bool)true, (bool)true, websocket::userData>* ws, int code, std::string_view message)
 {
-    connectedClients.erase(ws->getUserData()->id);
+    //connectedClients.erase(ws->getUserData()->id);
+    if(ws->getUserData()->authed) {
+        removeUser(ws->getUserData()->username);
+    }
 }
