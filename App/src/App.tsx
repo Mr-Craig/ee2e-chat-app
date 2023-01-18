@@ -1,4 +1,4 @@
-import { IonApp, IonHeader, IonRouterOutlet, IonSplitPane, IonText, setupIonicReact, useIonToast } from '@ionic/react';
+import { IonApp, IonHeader, IonLabel, IonRouterOutlet, IonSplitPane, IonTabBar, IonTabButton, IonTabs, IonText, setupIonicReact, useIonToast } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Link, Redirect, Route } from 'react-router-dom';
 
@@ -50,8 +50,8 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
-          <IonRouterOutlet id="main">
+        <IonTabs>
+          <IonRouterOutlet animated={true}>
             <Route path="/servers" exact={true} render={(props) => {
                 if(!connected) {
                   return (<ServerList/>);
@@ -71,7 +71,20 @@ const App: React.FC = () => {
                 return (<Redirect to="/"/>);
             }}/>
           </IonRouterOutlet>
-        </IonSplitPane>
+          <IonTabBar slot="bottom" style={{
+            display: "none"
+          }}>
+            <IonTabButton tab="chats" href="/chats">
+              <IonLabel>Chats</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="contacts" href="/contacts">
+              <IonLabel>Contacts</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="settings" href="/settings">
+              <IonLabel>Settings</IonLabel>
+            </IonTabButton>
+        </IonTabBar>
+        </IonTabs>
       </IonReactRouter>
     </IonApp>
   );

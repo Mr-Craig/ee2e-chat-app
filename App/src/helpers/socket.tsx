@@ -25,6 +25,9 @@ class SocketClass {
             this.emit("socketState", this.socketState);
         });
     }
+    public close() {
+        this.socketObject?.close();
+    }
 
     // allows other processes to listen for events
     public on(event: string, cb : any)

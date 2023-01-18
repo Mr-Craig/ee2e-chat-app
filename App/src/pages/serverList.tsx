@@ -1,4 +1,4 @@
-import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButtons, IonBackButton, IonSearchbar, IonItem, IonLabel, IonImg, IonRefresher, IonRefresherContent, RefresherEventDetail, useIonLoading, useIonAlert } from "@ionic/react";
+import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButtons, IonBackButton, IonSearchbar, IonItem, IonLabel, IonImg, IonRefresher, IonRefresherContent, RefresherEventDetail, useIonLoading, useIonAlert, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
 import ServerEntry, { serverEntry } from "../components/serverEntry";
 import Socket from "../helpers/socket";
@@ -39,7 +39,7 @@ const ServerList : React.FC = () => {
     }
 
     return (
-        <IonApp>
+        <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Server List</IonTitle>
@@ -82,7 +82,7 @@ const ServerList : React.FC = () => {
                     )
                 })}
             </IonContent>
-        </IonApp>
+        </IonPage>
     );
 }
 

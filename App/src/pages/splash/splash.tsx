@@ -1,4 +1,4 @@
-import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButtons, IonBackButton, IonSearchbar, IonItem, IonLabel, IonImg, IonIcon, IonGrid, IonRow, IonCol, IonButton, IonRippleEffect, IonInput } from "@ionic/react";
+import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButtons, IonBackButton, IonSearchbar, IonItem, IonLabel, IonImg, IonIcon, IonGrid, IonRow, IonCol, IonButton, IonRippleEffect, IonInput, IonPage } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { chatbubbles } from "ionicons/icons";
 
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const SplashPage : React.FC = () => {
     return (
-        <IonApp>
+        <IonPage>
             <IonContent class="ion-padding">
                 <IonGrid>
                     <IonRow class="ion-justify-content-center">
@@ -30,38 +30,40 @@ const SplashPage : React.FC = () => {
                 </IonGrid>
 
                 <IonGrid style={{
-                    "bottom": "0",
-                    "position": "absolute",
-                    "width": "calc(100% - var(--ion-padding, 16px))",
-                    marginLeft: "calc(0px - calc(var(--ion-padding, 16px) / 2))",
-                    paddingBottom: "10%"
+                    marginTop: "auto"
                 }}>
                     <IonRow>
-                        <IonItem style={{
-                            "width": "calc(100% - var(--ion-padding, 16px))",
-                            marginLeft: "0px",
-                            paddingBottom: "5%"
-                        }}>
-                            <IonLabel position="stacked">Server Name</IonLabel>
-                            <IonInput></IonInput>
-                        </IonItem>
-                        <IonButton expand="full"  style={{
-                            "width": "100%"
-                        }} class="ion-activatable ripple-parent">
-                            Connect
-                            <IonRippleEffect type="unbounded"></IonRippleEffect>
-                        </IonButton>
-
-                        <Link to="/servers" style={{ textDecoration: 'none', width: "100%", textAlign: "center", paddingTop: "15px" }}>
-                            <IonText style={{
-                                fontSize: "18px",
-                            }}> Server List </IonText>
-                        </Link>
+                        <IonCol>
+                            <IonItem className="ion-no-padding">
+                                <IonLabel position="stacked">Server Name</IonLabel>
+                                <IonInput></IonInput>
+                            </IonItem>
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol>
+                            <IonButton class="ion-activatable ripple-parent" expand="block">
+                                Connect
+                                <IonRippleEffect type="unbounded"></IonRippleEffect>
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol>
+                            <IonText  className="ion-no-padding" style={{
+                                    fontSize: "18px",
+                                    textAlign: "center"
+                                }}>
+                                <Link to="/servers" style={{ textDecoration: 'none', width: "100%", textAlign: "center", paddingTop: "15px" }}>
+                                    Server List
+                                </Link>
+                            </IonText>
+                        </IonCol>
                     </IonRow>
                 </IonGrid>
 
             </IonContent>
-        </IonApp>
+        </IonPage>
     );
 }
 

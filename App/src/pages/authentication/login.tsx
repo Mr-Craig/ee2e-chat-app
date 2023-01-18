@@ -11,7 +11,7 @@ const LoginPage : React.FC = () => {
                 <IonToolbar>
                     <IonTitle>Login</IonTitle>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/" />
+                        <IonBackButton ></IonBackButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
