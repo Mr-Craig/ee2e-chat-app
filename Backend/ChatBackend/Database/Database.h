@@ -16,6 +16,10 @@ public:
 
 	bool checkUsername(std::string& username);
 	bool login(Types::UserInfo& User);
+
+	std::vector<Types::QueuedMessage> getQueuedMessages(std::string& username);
+	bool deleteQueuedMessages(std::string& username);
+	bool queueMessage(Types::QueuedMessage& qMessage);
 private:
 	static std::shared_ptr<db> dbPtr;
 

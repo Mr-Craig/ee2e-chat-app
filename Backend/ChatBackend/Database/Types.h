@@ -24,4 +24,13 @@ namespace Types
         std::string password;
         std::string publicKey;
     };
+
+    struct QueuedMessage
+    {
+        QueuedMessage(std::string w, std::string m) : who(w), message(m)
+        {
+        }
+        const std::string who;
+        const std::string message;
+    };
 }

@@ -1,5 +1,6 @@
 #include "../Debug/Debug.h"
 #include "../Utils/Utils.h"
+#include "../Database/Database.h"
 #include "Socket.h"
 
 std::shared_ptr<websocket> websocket::socket_ptr = nullptr;
@@ -27,6 +28,7 @@ bool websocket::isUserOnline(std::string username)
 void websocket::addUser(std::string username, uWS::WebSocket<(bool)true, (bool)true, websocket::userData> *ws)
 {
     authedUsers[username] = ws;
+    processQueue(username);
 }
 
 void websocket::removeUser(std::string username)
@@ -37,13 +39,31 @@ void websocket::removeUser(std::string username)
 bool websocket::relayMessage(std::string username, nlohmann::json message)
 {
     if(!isUserOnline(username)) {
-        // TODO: save message
-        VERBOSE("Relay", "{} is offline, saving message for later.", username);
+        if(queueMessage(username, message)) {
+            VERBOSE("Queue", "Queued message to be sent to {}", username);
+        }
         return false;
     }
-
     authedUsers[username]->send(message.dump(), uWS::OpCode::TEXT);
     return true;
+}
+
+void websocket::processQueue(std::string username)
+{
+    std::vector<Types::QueuedMessage> QueuedMessage = db::get()->getQueuedMessages(username);
+    auto& wsRef = authedUsers[username];
+    for(auto& Message : QueuedMessage) 
+    {
+        wsRef->send(Message.message, uWS::OpCode::TEXT);
+        VERBOSE("Queue", "Sent queued message to {}", username);
+    }
+    db::get()->deleteQueuedMessages(username);
+}
+
+bool websocket::queueMessage(std::string username, nlohmann::json message)
+{
+    Types::QueuedMessage qMessage(username, message.dump());
+    return db::get()->queueMessage(qMessage);
 }
 
 void websocket::init()

@@ -26,6 +26,9 @@ public:
 	void removeUser(std::string username);
 	bool relayMessage(std::string username, nlohmann::json message);
 private:
+
+	void processQueue(std::string username);
+	bool queueMessage(std::string username, nlohmann::json message);
 	static std::shared_ptr<websocket> socket_ptr;
 
 	std::thread wsThread;

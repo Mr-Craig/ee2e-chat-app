@@ -63,8 +63,9 @@ int main(int argc, char** argv)
 			
 			ws->getUserData()->authed = true;
 			ws->getUserData()->username = user.username;
-			websocket::get()->addUser(user.username, ws);
+			// send login state before sending queued messages.
 			ws->send(ret.dump(), uWS::OpCode::TEXT);
+			websocket::get()->addUser(user.username, ws);
 			return;
 		} else {
 			nlohmann::json ret;

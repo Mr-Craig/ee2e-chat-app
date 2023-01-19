@@ -41,7 +41,7 @@ bool db::createTables()
 		SQLite::Statement queuedTable(sqlDb, "CREATE TABLE IF NOT EXISTS \"queued_messages\" ("
 			"\"who\"	TEXT,"
 			"\"msg\"	TEXT,"
-			"PRIMARY KEY(\"who\")"
+			"FOREIGN KEY(\"who\") REFERENCES users(\"username\")"
 		");");
 
 		queuedTable.executeStep();
@@ -153,8 +153,61 @@ bool db::login(Types::UserInfo& User)
 
 			return utils::verifyPasswordHash(User.password, hashedPass);
 		};
+		
+		// this shouldn't even return
+		return false;
 	} catch(std::exception& e) {
 		WARNING("DB", "Failed to login user into database, Error: {}", e.what());
 		return false;
+	}
+}
+
+bool db::deleteQueuedMessages(std::string & username)
+{
+	try {
+		SQLite::Statement query(sqlDb, "DELETE FROM queued_messages WHERE who = ?");
+
+		query.bind(1, username);
+
+		// false = done
+		return !query.executeStep();
+	} catch(std::exception& e) {
+		ERR("Queue", "Unable to delete queued messages, Error: {}", e.what());
+		return false;
+	}
+}
+
+bool db::queueMessage(Types::QueuedMessage & qMessage)
+{
+	try {
+		SQLite::Statement query(sqlDb, "INSERT INTO queued_messages(who, msg) VALUES(?, ?)");
+
+		query.bind(1, qMessage.who);
+		query.bind(2, qMessage.message);
+
+		// false = done
+		return !query.executeStep();
+	} catch(std::exception& e) {
+		ERR("Queue", "Unable to insert queued message into DB, Error: {}", e.what());
+		return false;
+	}
+}
+
+std::vector<Types::QueuedMessage> db::getQueuedMessages(std::string & username)
+{
+	std::vector<Types::QueuedMessage> ret;
+	try {
+		SQLite::Statement query(sqlDb, "SELECT who, msg FROM queued_messages WHERE who = ?");
+
+		query.bind(1, username);
+
+		while(query.executeStep()) {
+			ret.push_back(Types::QueuedMessage(query.getColumn(0 /*who*/), query.getColumn(1 /*message*/)));
+		}
+
+		return ret;
+	} catch(std::exception& e) {
+		ERR("Queue", "Unable to get queued messages from Database, Error: {}", e.what());
+		return ret;
 	}
 }
