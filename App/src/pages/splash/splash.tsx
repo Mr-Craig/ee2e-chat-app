@@ -1,11 +1,15 @@
-import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButtons, IonBackButton, IonSearchbar, IonItem, IonLabel, IonImg, IonIcon, IonGrid, IonRow, IonCol, IonButton, IonRippleEffect, IonInput, IonPage } from "@ionic/react";
+import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonText, IonButtons, IonBackButton, IonSearchbar, IonItem, IonLabel, IonImg, IonIcon, IonGrid, IonRow, IonCol, IonButton, IonRippleEffect, IonInput, IonPage, IonFooter, useIonModal, useIonLoading, useIonAlert } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { chatbubbles } from "ionicons/icons";
 
 import "./splash.css";
 import { Link } from "react-router-dom";
+import Socket from "../../helpers/socket";
 
 const SplashPage : React.FC = () => {
+    const [server, setServer] = useState("");
+    const [present, dismiss] = useIonLoading();
+    const [presentAlert] = useIonAlert();
     return (
         <IonPage>
             <IonContent class="ion-padding">
@@ -28,21 +32,41 @@ const SplashPage : React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
-
-                <IonGrid style={{
-                    marginTop: "auto"
-                }}>
+            </IonContent>
+            <IonFooter class="ion-padding" style={{
+                marginBottom: "10%"
+            }}>
+            <IonGrid>
                     <IonRow>
                         <IonCol>
-                            <IonItem className="ion-no-padding">
-                                <IonLabel position="stacked">Server Name</IonLabel>
-                                <IonInput></IonInput>
+                            <IonItem className="ion-no-padding" style={{
+                                background: "none"
+                            }}>
+                                <IonLabel position="floating">Server Name</IonLabel>
+                                <IonInput type="text" onIonInput={(event) => setServer(event.target.value as string)}></IonInput>
                             </IonItem>
                         </IonCol>
                     </IonRow>
                     <IonRow>
                         <IonCol>
-                            <IonButton class="ion-activatable ripple-parent" expand="block">
+                            <IonButton class="ion-activatable ripple-parent" onClick={(event) => {
+                                    present({
+                                        message:"Connecting...",
+                                        spinner:"circles"
+                                    });
+                                    Socket.connect(server).then((res) => {
+                                        if(!res) {
+                                            dismiss();
+                                            presentAlert({
+                                                header: 'Failed',
+                                                message: 'Failed to connect to server, please try a different one.',
+                                                buttons: ['OK']
+                                            });
+                                        } else {
+                                            dismiss();
+                                        }
+                                    });
+                            }} expand="block">
                                 Connect
                                 <IonRippleEffect type="unbounded"></IonRippleEffect>
                             </IonButton>
@@ -52,7 +76,9 @@ const SplashPage : React.FC = () => {
                         <IonCol>
                             <IonText  className="ion-no-padding" style={{
                                     fontSize: "18px",
-                                    textAlign: "center"
+                                    textAlign: "center",
+                                    position: "absolute",
+                                    width: "calc(100% - var(--ion-padding, 16px))",
                                 }}>
                                 <Link to="/servers" style={{ textDecoration: 'none', width: "100%", textAlign: "center", paddingTop: "15px" }}>
                                     Server List
@@ -61,8 +87,7 @@ const SplashPage : React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
-
-            </IonContent>
+            </IonFooter>
         </IonPage>
     );
 }
