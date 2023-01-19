@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "8229c785-f171-4447-9609-c62a8b3ea684",
+		"name": "Lookup Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11108208"
+	},
+	"item": [
+		{
+			"name": "Get Server List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is JSON\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 1s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://lookup.acraig.tech/",
+					"protocol": "https",
+					"host": [
+						"lookup",
+						"acraig",
+						"tech"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ping Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body = 'pong'\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"pong\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "server1.acraig.com"
+				},
+				"url": {
+					"raw": "https://lookup.acraig.tech/ping",
+					"protocol": "https",
+					"host": [
+						"lookup",
+						"acraig",
+						"tech"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

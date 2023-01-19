@@ -1,0 +1,49 @@
+{
+	"info": {
+		"_postman_id": "6dee62f5-210f-4158-b171-b89226de4743",
+		"name": "Chat Backend (HTTP)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11108208"
+	},
+	"item": [
+		{
+			"name": "Ping Chat Backend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches 'pong'\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"pong\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8003/ping",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8003",
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
