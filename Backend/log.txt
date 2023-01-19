@@ -1,0 +1,5 @@
+[2023-01-19 20:37:20][FATAL] Socket - 
+      --------- Fatal Error Occured ---------      
+ File: G:\Work\FYP\Backend\ChatBackend\Socket\Socket.cpp
+ Line: 72 
+ Reason: App Construction failed.

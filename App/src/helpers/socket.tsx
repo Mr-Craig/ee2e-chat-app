@@ -26,7 +26,9 @@ class SocketClass {
         });
     }
     public close() {
-        this.socketObject?.close();
+        Store.remove("socketAddress").then(() => {
+            this.socketObject?.close();
+        });
     }
 
     // allows other processes to listen for events
@@ -37,6 +39,20 @@ class SocketClass {
         }
 
         this.callbacks[event].push(cb);
+    }
+
+    public clearEvent(event : string)
+    {
+        delete this.callbacks[event];
+    }
+
+    public send(event: string, body : any)
+    {
+        let object : object = {
+            "event": event,
+            "body": body
+        }
+        this.socketObject?.send(JSON.stringify(object));
     }
 
     private emit(event: string, data : any)
