@@ -66,6 +66,10 @@ int main(int argc, char** argv)
 			// send login state before sending queued messages.
 			ws->send(ret.dump(), uWS::OpCode::TEXT);
 			websocket::get()->addUser(user.username, ws);
+			nlohmann::json retAuth;
+			retAuth["body"] = {};
+			retAuth["event"] = "authed";
+			ws->send(retAuth.dump(), uWS::OpCode::TEXT);
 			return;
 		} else {
 			nlohmann::json ret;
@@ -119,6 +123,10 @@ int main(int argc, char** argv)
 			ws->getUserData()->username = newUser.username;
 			websocket::get()->addUser(newUser.username, ws);
 			ws->send(ret.dump(), uWS::OpCode::TEXT);
+			nlohmann::json retAuth;
+			retAuth["body"] = {};
+			retAuth["event"] = "authed";
+			ws->send(retAuth.dump(), uWS::OpCode::TEXT);
 			return;
 		} else {
 			nlohmann::json ret;
