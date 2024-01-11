@@ -1,0 +1,6 @@
+[submodule "capacitor-crypto"]
+	path = capacitor-crypto
+	url = https://github.com/Mr-Craig/capacitor-crypto
+[submodule "Backend/ThirdParty/ecec"]
+	path = Backend/ThirdParty/ecec
+	url = https://github.com/web-push-libs/ecec

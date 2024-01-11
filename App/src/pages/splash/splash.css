@@ -1,0 +1,10 @@
+#chat-icon {
+    text-align: center;
+    font-size:128px !important;
+    width: 100%;
+    margin-top:15%;
+}
+
+ion-item {
+    --background: transparent;
+}

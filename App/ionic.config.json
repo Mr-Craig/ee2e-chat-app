@@ -1,0 +1,7 @@
+{
+  "name": "E2EE Chat",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "chat-backend",
+  "version-string": "0.1.0",
+  "dependencies": [
+    {
+      "name": "usockets",
+      "features": [ "ssl" ]
+    },
+    { "name": "uwebsockets" },
+    "nlohmann-json",
+    "fmt",
+    "sqlitecpp",
+    {
+      "name": "curl",
+      "features": [ "ssl" ]
+    },
+    "argon2",
+    "libcbor",
+    "cppcodec",
+    {
+      "name": "websocketpp",
+      "features": [ "recommended" ]
+    }
+  ]
+}
